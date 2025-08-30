@@ -29,25 +29,27 @@ syntax.add {
     { pattern = "-?%d+[%d%.eE]*",       type = "number" },
 
     -- Comments
-    { pattern = "#.*\n",                type = "comment" },
+    { pattern = "#.*\n",                type = "comment2" },
+
+    -- Arrow
+    { pattern = "->", type = "arrow" },
 
     -- Operators
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
 
     -- --- IDENTIFIERS ---
     -- ALL_CAPS standalone or after a dot
-    { pattern = "%.?%u[%u%d_]*%f[^%w_]", type = "operator" },
+    { pattern = "%.%u[%u%d_]*%f[^%w_]", type = "operator" },
 
     -- Class names (PascalCase)
     { pattern = "%u[%w_]*",             type = "class" },
-    
+
+    -- __Method__ :
+    { pattern = "%.?%__[%a_][%w_]*%__?%f[(]", type = "operator" },
+
     -- Class names after a dot (e.g. .MyClass)
     { pattern = "%.%u[%w_]*",           type = "class" },
 
-    -- Import
-    { pattern = "from %.?[%a_][%w_]* import  %.?%,?[%a_][%w_]* ", type = "class" },
-    { pattern = "import %.?[%a_][%w_]* as %.?%,?[%a_][%w_]* ", type = "class" },
-    { pattern = "import %.?[%a_][%w_]*", type = "class" },
     -- Function calls
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
 
@@ -56,7 +58,6 @@ syntax.add {
 
     -- Attributes without parentheses (ex: .lower)
     { pattern = "%.[%a_][%w_]*",        type = "field" },
-
 
     -- Catch-all identifiers
     { pattern = "[%a_][%w_]*",          type = "field" },
@@ -103,19 +104,34 @@ syntax.add {
     -- Literals
     ["True"] = "literal",
     ["False"] = "literal",
-    ["None"] = "literal",
+    ["None"] = "number",
 
     -- Builtins
     ["self"] = "class",
-    ["print"] = "function",
-    ["len"] = "function",
-    ["range"] = "function",
-    ["list"] = "function",
-    ["dict"] = "function",
-    ["set"] = "function",
-    ["tuple"] = "function",
-    ["isinstance"] = "function",
-    ["super"] = "function",
-    ["object"] = "type"
+
+    -- Numeric Types:
+    ["complex"] = "class",
+    ["int"] = "class",
+    ["float"] = "class",
+    -- Text Type:
+    ["str"] = "class",
+    -- Sequence Types:
+    ["list"] = "class",
+    ["tuple"] = "class",
+    ["range"] = "class",
+    -- Mapping Type:
+    ["dict"] = "class",
+    -- Set Types:
+    ["set"] = "class",
+    ["frozenset"] = "class",
+    -- Boolean Type:
+    ["bool"] = "class",
+    -- Binary Types:
+    ["bytes"] = "class",
+    ["bytearray"] = "class",
+    ["memoryview"] = "class",
+
+    ["object"] = "class",
+
   }
 }
